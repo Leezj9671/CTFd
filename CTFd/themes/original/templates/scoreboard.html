@@ -3,7 +3,7 @@
 {% block content %}
 <div class="jumbotron home">
 	<div class="container">
-		<h1>Scoreboard</h1>
+		<h1>分数排行</h1>
 	</div>
 </div>
 <div class="container main-container">
@@ -20,7 +20,7 @@
 		{% if score_frozen %}
 		<div class="container main-container">
 			<div class="row">
-				<h1>Scoreboard has been frozen.</h1>
+				<h1>分数排行已冻结</h1>
 			</div>
 		</div>
 		{% endif %}
@@ -31,11 +31,11 @@
 	<table id="scoreboard" class="table table-striped">
 		<thead>
 			<tr>
-				<td width="10px"><b>Place</b>
+				<td width="25px"><b>名</b>
 				</td>
-				<td><b>Team</b>
+				<td><b>队伍名</b>
 				</td>
-				<td><b>Score</b>
+				<td><b>分数</b>
 				</td>
 			</tr>
 		</thead>
