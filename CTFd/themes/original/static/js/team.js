@@ -48,7 +48,7 @@ function scoregraph() {
         ];
 
         var layout = {
-            title: 'Score over Time',
+            title: '得分情况',
             paper_bgcolor: 'rgba(0,0,0,0)',
             plot_bgcolor: 'rgba(0,0,0,0)'
         };
@@ -78,7 +78,7 @@ function keys_percentage_graph() {
         }];
 
         var layout = {
-            title: 'Key Percentages',
+            title: 'KEY百分比',
             paper_bgcolor: 'rgba(0,0,0,0)',
             plot_bgcolor: 'rgba(0,0,0,0)'
         };
@@ -124,7 +124,7 @@ function category_breakdown_graph() {
         }];
 
         var layout = {
-            title: 'Category Breakdown',
+            title: '类别解题情况',
             paper_bgcolor: 'rgba(0,0,0,0)',
             plot_bgcolor: 'rgba(0,0,0,0)'
         };

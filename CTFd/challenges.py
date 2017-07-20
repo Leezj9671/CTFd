@@ -38,9 +38,9 @@ def hints_view(hintid):
         if not unlock and utils.ctftime():
             team = Teams.query.filter_by(id=session['id']).first()
             if team.score() < hint.cost:
-                return jsonify({'errors': 'Not enough points'})
+                return jsonify({'errors': '点数不足'})
             unlock = Unlocks(model='hints', teamid=session['id'], itemid=hint.id)
-            award = Awards(teamid=session['id'], name='Hint for {}'.format(chal.name), value=(-hint.cost))
+            award = Awards(teamid=session['id'], name='提示 {}'.format(chal.name), value=(-hint.cost))
             db.session.add(unlock)
             db.session.add(award)
             db.session.commit()
@@ -81,17 +81,17 @@ def challenges_view():
                 pass
             else:  # We are NOT allowed to view after the CTF ends
                 if utils.get_config('start') and not utils.ctf_started():
-                    errors.append('{} has not started yet'.format(utils.ctf_name()))
+                    errors.append('{} 还未开始'.format(utils.ctf_name()))
                 if (utils.get_config('end') and utils.ctf_ended()) and not utils.view_after_ctf():
-                    errors.append('{} has ended'.format(utils.ctf_name()))
+                    errors.append('{} 已经结束'.format(utils.ctf_name()))
                 return render_template('chals.html', errors=errors, start=int(start), end=int(end))
         if utils.get_config('verify_emails') and not utils.is_verified():  # User is not confirmed
             return redirect(url_for('auth.confirm_user'))
     if utils.user_can_view_challenges():  # Do we allow unauthenticated users?
         if utils.get_config('start') and not utils.ctf_started():
-            errors.append('{} has not started yet'.format(utils.ctf_name()))
+            errors.append('{} 还未开始'.format(utils.ctf_name()))
         if (utils.get_config('end') and utils.ctf_ended()) and not utils.view_after_ctf():
-            errors.append('{} has ended'.format(utils.ctf_name()))
+            errors.append('{} 已经结束'.format(utils.ctf_name()))
         return render_template('chals.html', errors=errors, start=int(start), end=int(end))
     else:
         return redirect(url_for('auth.login', next='challenges'))
@@ -268,7 +268,7 @@ def chal(chalid):
                 db.session.close()
             logger.warn("[{0}] {1} submitted {2} with kpm {3} [TOO FAST]".format(*data))
             # return '3' # Submitting too fast
-            return jsonify({'status': 3, 'message': "You're submitting keys too fast. Slow down."})
+            return jsonify({'status': 3, 'message': "兄台, 提交flag过快, 慢点儿"})
 
         solves = Solves.query.filter_by(teamid=session['id'], chalid=chalid).first()
 
@@ -283,7 +283,7 @@ def chal(chalid):
             if max_tries and fails >= max_tries > 0:
                 return jsonify({
                     'status': 0,
-                    'message': "You have 0 tries remaining"
+                    'message': "剩下0次机会了"
                 })
 
             chal_class = get_chal_class(chal.type)
@@ -294,7 +294,7 @@ def chal(chalid):
                     db.session.commit()
                     db.session.close()
                 logger.info("[{0}] {1} submitted {2} with kpm {3} [CORRECT]".format(*data))
-                return jsonify({'status': 1, 'message': 'Correct'})
+                return jsonify({'status': 1, 'message': '正确'})
 
             if utils.ctftime():
                 wrong = WrongKeys(teamid=session['id'], chalid=chalid, ip=utils.get_ip(), flag=provided_key)
@@ -308,9 +308,9 @@ def chal(chalid):
                 tries_str = 'tries'
                 if attempts_left == 1:
                     tries_str = 'try'
-                return jsonify({'status': 0, 'message': 'Incorrect. You have {} {} remaining.'.format(attempts_left, tries_str)})
+                return jsonify({'status': 0, 'message': '错误，剩余机会{} {}.'.format(attempts_left, tries_str)})
             else:
-                return jsonify({'status': 0, 'message': 'Incorrect'})
+                return jsonify({'status': 0, 'message': '错误'})
 
         # Challenge already solved
         else:
@@ -320,5 +320,5 @@ def chal(chalid):
     else:
         return jsonify({
             'status': -1,
-            'message': "You must be logged in to solve a challenge"
+            'message': "你得登陆才能解题啊"
         })
