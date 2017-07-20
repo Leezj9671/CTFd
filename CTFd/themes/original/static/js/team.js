@@ -78,7 +78,7 @@ function keys_percentage_graph() {
         }];
 
         var layout = {
-            title: 'KEY百分比',
+            title: '解题成功占比',
             paper_bgcolor: 'rgba(0,0,0,0)',
             plot_bgcolor: 'rgba(0,0,0,0)'
         };
