@@ -43,7 +43,7 @@ def setup():
     <h4 class="text-left">何为CTF？</h4>
     <h5 class="text-left">CTF（Capture The Flag）中文一般译作夺旗赛，在网络安全领域中指的是网络安全技术人员之间进行技术竞技的一种比赛形式。CTF起源于1996年DEFCON全球黑客大会，以代替之前黑客们通过互相发起真实攻击进行技术比拼的方式。</h5>
     <h4 class="text-left">如何比拼？</h4>
-    <h5 class="text-left">会有不同类型的题目，一般会通过一些抓包／改包／破解／逆向／各种漏洞等的攻击利用方式找到系统中存在的一个字符串（被称为Flag），如"flag\{UJS_CTF\}"，提交这个字符串，如果正确系统会标示为已解决，获得相应积分。</h5>
+    <h5 class="text-left">会有不同类型的题目，一般会通过一些抓包／改包／破解／逆向／各种漏洞等的攻击利用方式找到系统中存在的一个字符串（被称为Flag）,提交这个字符串，如果正确系统会标示为已解决，获得相应积分。</h5>
     <h4 class="text-left" style="color:red">对开发人员的好处？</h4>
     <h5 class="text-left" style="color:red">以一种带有趣味性和很强动手实操的方式，深刻了解众多漏洞的危害，提高安全意识。</h5>
     <h4 class="text-left">注意事项</h4>
