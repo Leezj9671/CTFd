@@ -37,20 +37,20 @@ def setup():
             admin.banned = True
 
             # Index page
-#             page = Pages('index', """<div class="container main-container">
-#     <img class="logo" src="themes/original/static/img/logo.png" />
-#     <h3 class="text-center">
-#         <p>A cool CTF platform from <a href="https://ctfd.io">ctfd.io</a></p>
-#         <p>Follow us on social media:</p>
-#         <a href="https://twitter.com/ctfdio"><i class="fa fa-twitter fa-2x" aria-hidden="true"></i></a>&nbsp;
-#         <a href="https://facebook.com/ctfdio"><i class="fa fa-facebook-official fa-2x" aria-hidden="true"></i></a>&nbsp;
-#         <a href="https://github.com/ctfd"><i class="fa fa-github fa-2x" aria-hidden="true"></i></a>
-#     </h3>
-#     <br>
-#     <h4 class="text-center">
-#         <a href="admin">点击此处</a> to login and setup your CTF
-#     </h4>
-# </div>""".format(request.script_root))
+            page = Pages('index', """<div class="container main-container">
+    <img class="logo" src="themes/original/static/img/logo.png" />
+    <h3 class="text-center">
+        <p>A cool CTF platform from <a href="https://ctfd.io">ctfd.io</a></p>
+        <p>Follow us on social media:</p>
+        <a href="https://twitter.com/ctfdio"><i class="fa fa-twitter fa-2x" aria-hidden="true"></i></a>&nbsp;
+        <a href="https://facebook.com/ctfdio"><i class="fa fa-facebook-official fa-2x" aria-hidden="true"></i></a>&nbsp;
+        <a href="https://github.com/ctfd"><i class="fa fa-github fa-2x" aria-hidden="true"></i></a>
+    </h3>
+    <br>
+    <h4 class="text-center">
+        <a href="admin">Click here</a> to login and setup your CTF
+    </h4>
+</div>""".format(request.script_root))
 
             # max attempts per challenge
             max_tries = utils.set_config('max_tries', 0)
@@ -157,7 +157,7 @@ def team(teamid):
     db.session.close()
 
     if utils.hide_scores() and teamid != session.get('id'):
-        errors.append('分数当前已被隐藏')
+        errors.append('Scores are currently hidden')
 
     if errors:
         return render_template('team.html', team=user, errors=errors)
@@ -194,17 +194,17 @@ def profile():
 
             if ('password' in request.form.keys() and not len(request.form['password']) == 0) and \
                     (not bcrypt_sha256.verify(request.form.get('confirm').strip(), user.password)):
-                errors.append("旧密码错误")
+                errors.append("Your old password doesn't match what we have.")
             if not valid_email:
-                errors.append("不是有效的Email地址")
+                errors.append("That email doesn't look right")
             if not utils.get_config('prevent_name_change') and names and name != session['username']:
-                errors.append('战队名称已存在')
+                errors.append('That team name is already taken')
             if emails and emails.id != session['id']:
-                errors.append('Email地址已存在')
+                errors.append('That email has already been used')
             if not utils.get_config('prevent_name_change') and name_len:
-                errors.append('队伍名太短')
+                errors.append('Pick a longer team name')
             if website.strip() and not utils.validate_url(website):
-                errors.append("不是有效的URL地址")
+                errors.append("That doesn't look like a valid URL")
 
             if len(errors) > 0:
                 return render_template('profile.html', name=name, email=email, website=website,
