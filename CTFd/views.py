@@ -39,17 +39,18 @@ def setup():
             # Index page
             page = Pages('index', """<div class="container main-container">
     <img class="logo" src="themes/original/static/img/logo.png" />
-    <h3 class="text-center">
-        <p>A cool CTF platform from <a href="https://ctfd.io">ctfd.io</a></p>
-        <p>Follow us on social media:</p>
-        <a href="https://twitter.com/ctfdio"><i class="fa fa-twitter fa-2x" aria-hidden="true"></i></a>&nbsp;
-        <a href="https://facebook.com/ctfdio"><i class="fa fa-facebook-official fa-2x" aria-hidden="true"></i></a>&nbsp;
-        <a href="https://github.com/ctfd"><i class="fa fa-github fa-2x" aria-hidden="true"></i></a>
-    </h3>
-    <br>
-    <h4 class="text-center">
-        <a href="admin">Click here</a> to login and setup your CTF
-    </h4>
+    <h4 class="text-center">注意：为了能有良好的体验，请在PC版浏览器打开</h4>
+    <h4 class="text-left">何为CTF？</h4>
+    <h5 class="text-left">CTF（Capture The Flag）中文一般译作夺旗赛，在网络安全领域中指的是网络安全技术人员之间进行技术竞技的一种比赛形式。CTF起源于1996年DEFCON全球黑客大会，以代替之前黑客们通过互相发起真实攻击进行技术比拼的方式。</h5>
+    <h4 class="text-left">如何比拼？</h4>
+    <h5 class="text-left">会有不同类型的题目，一般会通过一些抓包／改包／破解／逆向／各种漏洞等的攻击利用方式找到系统中存在的一个字符串（被称为Flag），如"flag\{UJS_CTF\}"，提交这个字符串，如果正确系统会标示为已解决，获得相应积分。</h5>
+    <h4 class="text-left" style="color:red">对开发人员的好处？</h4>
+    <h5 class="text-left" style="color:red">以一种带有趣味性和很强动手实操的方式，深刻了解众多漏洞的危害，提高安全意识。</h5>
+    <h4 class="text-left">注意事项</h4>
+    <h5 class="text-left">1，禁止破坏系统的环境。某些漏洞被利用后可能会超出原有设计的危害，比如可以搞挂比赛环境等。要杜绝，只需要拿到ctf的字符串即可。</h5>
+    <h5 class="text-left">2，禁止对环境进行DOS攻击。这里不是DOS攻击的练习场，并且会影响到他人的练习。</h5>
+    <h5 class="text-left" style="color:red">3，建议先从简单的一个系列开始《基础系列》</h5>
+    <h3 class="text-center"><a target="_self" href="/challenges">Let's Begin</a></h3>
 </div>""".format(request.script_root))
 
             # max attempts per challenge
@@ -157,7 +158,7 @@ def team(teamid):
     db.session.close()
 
     if utils.hide_scores() and teamid != session.get('id'):
-        errors.append('Scores are currently hidden')
+        errors.append('分数已隐藏')
 
     if errors:
         return render_template('team.html', team=user, errors=errors)
@@ -194,17 +195,17 @@ def profile():
 
             if ('password' in request.form.keys() and not len(request.form['password']) == 0) and \
                     (not bcrypt_sha256.verify(request.form.get('confirm').strip(), user.password)):
-                errors.append("Your old password doesn't match what we have.")
+                errors.append("旧密码不匹配")
             if not valid_email:
-                errors.append("That email doesn't look right")
+                errors.append("不是有效的Email地址")
             if not utils.get_config('prevent_name_change') and names and name != session['username']:
-                errors.append('That team name is already taken')
+                errors.append('队伍名已注册')
             if emails and emails.id != session['id']:
-                errors.append('That email has already been used')
+                errors.append('Email地址已注册')
             if not utils.get_config('prevent_name_change') and name_len:
-                errors.append('Pick a longer team name')
+                errors.append('队伍名字不够长')
             if website.strip() and not utils.validate_url(website):
-                errors.append("That doesn't look like a valid URL")
+                errors.append("不是有效的URL地址")
 
             if len(errors) > 0:
                 return render_template('profile.html', name=name, email=email, website=website,
