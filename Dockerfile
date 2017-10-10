@@ -1,4 +1,5 @@
 FROM python:2.7-alpine
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories
 RUN apk update && \
     apk add python python-dev libffi-dev gcc make musl-dev py-pip mysql-client
 
